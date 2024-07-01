@@ -10,7 +10,7 @@ export default function Home() {
         <div className="flex justify-around">
           <Button className="p-2 rounded-md">Hello</Button>
           <div className="p-2" />
-          <ModeToggle />
+          <ModeToggle/>
         </div>
       </div>
     </div>
