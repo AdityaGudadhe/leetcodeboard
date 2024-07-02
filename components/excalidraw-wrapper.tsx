@@ -8,7 +8,7 @@ interface totalPayloadtype{
   elements: readonly ExcalidrawElement[] | null,
 }
 
-export default function ExcalidrawWrapper({ id, initialPayload } : {id:string, initialPayload: totalPayloadtype}):ReactElement{
+export default function ExcalidrawWrapper({ id, initialPayload } : {id:string, initialPayload: totalPayloadtype|null}):ReactElement{
   const [exElements, setexElements] = useState<readonly ExcalidrawElement[] | null>(null);
   useEffect(() => {
     setTimeout(()=>{
@@ -18,11 +18,14 @@ export default function ExcalidrawWrapper({ id, initialPayload } : {id:string, i
       localStorage.setItem(id, JSON.stringify(totalPayload));
     },2000);
   }, [exElements])
-
+  let elements:readonly ExcalidrawElement[] | null = null;
+  if(initialPayload){
+    elements = initialPayload.elements;
+  }
   return (
     <div className="h-screen w-screen">
       <Excalidraw initialData={{
-        elements: initialPayload.elements,
+        elements: elements,
       }
       } onChange={(excalidrawElements, appState, files)=>{
         setexElements(excalidrawElements);
