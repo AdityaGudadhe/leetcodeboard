@@ -2,13 +2,12 @@
 import { Excalidraw, convertToExcalidrawElements } from "@excalidraw/excalidraw";
 import React, { ReactElement, useEffect, useState } from "react"
 import { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types"
-import { AppState } from "@excalidraw/excalidraw/types/types"
 
-interface totalPayloadtype{
+type totalPayloadtype = {
   elements: readonly ExcalidrawElement[] | null,
-}
+} | null;
 
-export default function ExcalidrawWrapper({ id, initialPayload } : {id:string, initialPayload: totalPayloadtype|null}):ReactElement{
+export default function ExcalidrawWrapper({ id, initialPayload } : {id:string, initialPayload: totalPayloadtype}):ReactElement{
   const [exElements, setexElements] = useState<readonly ExcalidrawElement[] | null>(null);
   useEffect(() => {
     setTimeout(()=>{

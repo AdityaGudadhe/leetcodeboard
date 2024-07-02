@@ -10,9 +10,9 @@ type paramType = {
   id: string
 }
 
-interface totalPayloadtype{
+type totalPayloadtype = {
   elements: readonly ExcalidrawElement[] | null,
-}
+} | null;
 
 export default function Id(){
   const params = useParams<paramType>()

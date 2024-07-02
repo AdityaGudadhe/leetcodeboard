@@ -1,5 +1,6 @@
 import { ModeToggle } from "@/components/mode-toggle"
 import { MainNav } from "@/components/main-nav"
+import { LoginNav } from "@/components/auth-nav"
 
 export function SiteHeader() {
   return (
@@ -10,6 +11,7 @@ export function SiteHeader() {
           <div className="w-full flex-1 md:w-auto md:flex-none">
           </div>
           <nav className="flex items-center">
+            <LoginNav />
             <ModeToggle/>
           </nav>
         </div>
