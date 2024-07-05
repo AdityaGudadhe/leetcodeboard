@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
-  problemId: z.number({
+  problemId: z.coerce.number({
     required_error: "ProblemId is required",
     invalid_type_error: "problem ID is not valid"
   })
@@ -25,7 +25,8 @@ const formSchema = z.object({
 
 export type problemSchemaType = z.infer<typeof formSchema>;
 
-export function ProfileForm(){
+//@ts-ignore
+export function ProfileForm(userId:any){
   const router = useRouter();
   const form = useForm<problemSchemaType>({
     resolver: zodResolver(formSchema),
@@ -34,7 +35,7 @@ export function ProfileForm(){
     }
   })
 
-  function onSubmit(values:problemSchemaType){
+  async function onSubmit(values:problemSchemaType){
     router.push(`/problems/${values.problemId}`);
   }
 
@@ -53,7 +54,7 @@ export function ProfileForm(){
               <FormControl>
                 <Input placeholder="Problem ID" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage/>
             </FormItem>
           )}
         />

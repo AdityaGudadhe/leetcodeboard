@@ -4,7 +4,8 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import SiteFooter from "@/components/footer"
 import { SiteHeader } from "@/components/header"
-import React from "react"
+import React, { Suspense } from "react"
+import HomeLoading from "@/app/loading"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -25,11 +26,14 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange
-        >
+          disableTransitionOnChange>
+
           <SiteHeader/>
-          {children}
+          <Suspense fallback={<HomeLoading/>}>
+            {children}
+          </Suspense>
           <SiteFooter />
+
         </ThemeProvider>
       </body>
     </html>

@@ -1,28 +1,27 @@
 "use client"
 
 import { useParams } from "next/navigation"
-import { Excalidraw } from "@excalidraw/excalidraw"
-import ExcalidrawWrapper from "@/components/excalidraw-wrapper"
-import { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types"
-import { AppState } from "@excalidraw/excalidraw/types/types"
+import IdLoading from "@/app/problems/[id]/loading"
+import { useAuthListener } from "@/hooks/auth/authStatus"
+import UnAuthorized from "@/components/redirect"
+import IdWrapper from "@/components/authorized-enrty"
 
 type paramType = {
   id: string
 }
 
-type totalPayloadtype = {
-  elements: readonly ExcalidrawElement[] | null,
-} | null;
 
-export default function Id(){
+
+export default function Id() {
   const params = useParams<paramType>()
-  // document.title = String(id);
-  let initialPayload: totalPayloadtype|null = null;
-  const recievedPayload:string|null = localStorage.getItem(params.id);
-  if (recievedPayload) {
-    initialPayload = JSON.parse(recievedPayload);
-  }
+  const { loggedIn , checkingStatus, userId } = useAuthListener();
+  document.title = String(params.id);
+
   return <div>
-    <ExcalidrawWrapper id={params.id} initialPayload={initialPayload}/>
+    {
+      checkingStatus ? <IdLoading/>
+        : loggedIn ? <IdWrapper userId={userId} problemId={params.id} />
+        : <UnAuthorized/>
+    }
   </div>
 }
