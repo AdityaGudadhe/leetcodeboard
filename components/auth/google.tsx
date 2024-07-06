@@ -3,14 +3,19 @@ import { useRouter } from "next/navigation"
 import { auth, googleProvider } from "@/firebase/client"
 import { signInWithPopup } from "firebase/auth"
 import { setCookie } from "nookies"
+import { useContext, useState } from "react"
+import { LoggedStateContext } from "@/components/context-api/logged-state"
 
 
 export default function GoogleSignup() {
   const router = useRouter()
+  const [ loggedState, setLoggedState ] = useState<boolean>(false);
+  const { isLogged, setIsLogged } = useContext(LoggedStateContext);
   async function loginHandler(){
     try{
       const response = await signInWithPopup(auth, googleProvider);
       const token = await response.user.getIdToken();
+      setLoggedState(true);
       localStorage.setItem("authorization", token);
       // setCookie(null, 'authorization', token, { path: '/' });
       router.push('/');
@@ -18,6 +23,10 @@ export default function GoogleSignup() {
     catch(err){
       console.log("google signin error:", err);
     }
+  }
+
+  if(loggedState){
+    if(setIsLogged) setIsLogged(true);
   }
 
   return (

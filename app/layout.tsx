@@ -6,6 +6,7 @@ import SiteFooter from "@/components/footer"
 import { SiteHeader } from "@/components/header"
 import React, { Suspense } from "react"
 import HomeLoading from "@/app/loading"
+import { StateProvider } from "@/components/context-api/logged-state"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -27,13 +28,13 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange>
-
-          <SiteHeader/>
-          <Suspense fallback={<HomeLoading/>}>
-            {children}
-          </Suspense>
-          <SiteFooter />
-
+          <StateProvider>
+            <SiteHeader/>
+            <Suspense fallback={<HomeLoading/>}>
+              {children}
+            </Suspense>
+            <SiteFooter />
+          </StateProvider>
         </ThemeProvider>
       </body>
     </html>
