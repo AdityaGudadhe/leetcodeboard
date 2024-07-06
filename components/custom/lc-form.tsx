@@ -25,8 +25,7 @@ const formSchema = z.object({
 
 export type problemSchemaType = z.infer<typeof formSchema>;
 
-//@ts-ignore
-export function ProfileForm(userId:any){
+export function ProfileForm(){
   const router = useRouter();
   const form = useForm<problemSchemaType>({
     resolver: zodResolver(formSchema),
