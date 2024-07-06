@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/firebase/client"
+import { auth } from "@/app/client"
 
 const userSchema = z.object({
   email: z.string().email(),

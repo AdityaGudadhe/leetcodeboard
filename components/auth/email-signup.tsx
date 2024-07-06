@@ -15,7 +15,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/firebase/client"
+import { auth } from "@/app/client"
+import { useContext, useState } from "react"
+import { LoggedStateContext } from "@/components/context-api/logged-state"
 
 
 
@@ -32,6 +34,9 @@ export type loginSchemaType = z.infer<typeof userSchema>;
 
 export default function EmailSignup() {
   const router = useRouter()
+  const [ loggedState, setLoggedState ] = useState<boolean>(false);
+  const { isLogged, setIsLogged } = useContext(LoggedStateContext);
+
 
   const form = useForm<loginSchemaType>({
     resolver: zodResolver(userSchema),
@@ -43,6 +48,7 @@ export default function EmailSignup() {
       const response = await createUserWithEmailAndPassword(auth, values.email, values.password)
       const token: string = await response.user.getIdToken()
       localStorage.setItem("authorization", token)
+      setLoggedState(true);
       router.push("/login")
     }
     catch(error){
@@ -50,6 +56,9 @@ export default function EmailSignup() {
     }
   }
 
+  if(loggedState){
+    if(setIsLogged) setIsLogged(true);
+  }
 
   return (
     <Form {...form}>

@@ -1,22 +1,33 @@
 "use client"
 import { useRouter } from "next/navigation"
-import { auth, githubProvider } from "@/firebase/client"
+import { auth, githubProvider } from "@/app/client"
 import { signInWithPopup } from "firebase/auth"
 import nookies from "nookies"
+import { useContext, useState } from "react"
+import { LoggedStateContext } from "@/components/context-api/logged-state"
 
 export default function GithubSignup() {
   const router = useRouter()
+  const [ loggedState, setLoggedState ] = useState<boolean>(false);
+  const { isLogged, setIsLogged } = useContext(LoggedStateContext);
+
+
   async function loginHandler(){
     try{
       const response = await signInWithPopup(auth, githubProvider);
       const token = await response.user.getIdToken();
 
       nookies.set(null, 'token', token, { path: '/' });
+      setLoggedState(true);
       router.push('/');
     }
     catch(err){
       console.log("GitHub signin error:", err);
     }
+  }
+
+  if(loggedState){
+    if(setIsLogged) setIsLogged(true);
   }
 
   return (

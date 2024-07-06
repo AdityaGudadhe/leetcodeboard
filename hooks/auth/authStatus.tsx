@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { auth } from "@/firebase/client"
+import { auth } from "@/app/client"
 
 export const useAuthListener = () => {
   const [loggedIn, setLoggedIn] = useState(false);

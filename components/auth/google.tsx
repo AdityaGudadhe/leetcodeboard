@@ -1,6 +1,6 @@
 "use client"
 import { useRouter } from "next/navigation"
-import { auth, googleProvider } from "@/firebase/client"
+import { auth, googleProvider } from "@/app/client"
 import { signInWithPopup } from "firebase/auth"
 import { setCookie } from "nookies"
 import { useContext, useState } from "react"

@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
 import { collection, getDocs, query, where } from "firebase/firestore"
-import { db } from "@/firebase/client"
+import { db } from "@/app/client"
 
 export async function GET(req: NextRequest, context: any) {
   const { params } = context;
-  const userId = params.userId;
-  const problemId = params.problemId;
+  const userId:string = params.userId;
+  const problemId:string = params.problemId;
+
+
   try {
     const problemRef = collection(db, "problemData");
     const q = query(problemRef, where("problemId", "==", problemId), where("userId", "==", userId));
@@ -22,6 +24,7 @@ export async function GET(req: NextRequest, context: any) {
     const elements: object[] = JSON.parse(response[0].elements);
     return NextResponse.json({elements});
   }
+
   catch (error) {
     console.error('Error adding or updating document:', error);
     return NextResponse.json({hi:"error"});

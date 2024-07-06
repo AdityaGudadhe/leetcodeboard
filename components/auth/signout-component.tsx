@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { signOut } from "firebase/auth";
-import { auth } from "@/firebase/client"
+import { auth } from "@/app/client"
 import { useContext } from "react"
 import { LoggedStateContext } from "@/components/context-api/logged-state"
 
